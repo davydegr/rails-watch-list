@@ -1,1 +1,9 @@
 // Specific CSS for your home-page
+.list-grid {
+  grid-template-areas:
+                        "left"  "right-big"     "right-big"
+                        "left"  "right-small-1" "right-small-2"
+                        ;
+
+  grid-gap: 1em;
+}

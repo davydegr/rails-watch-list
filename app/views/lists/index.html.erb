@@ -2,18 +2,42 @@
   <h1>All your lists</h1>
 </div>
 
-
 <h2>Add a list</h2>
 <%= simple_form_for(@list) do |f| %>
   <%= f.input :name %>
+  <%= f.input :photo, as: :file %>
   <%= f.submit %>
 <% end %>
 
 <h2>Your lists</h2>
-<% @lists.each do |list| %>
 
-    <%= link_to list_path(list) do  %>
-      <p><%= list.name %></p>
-    <% end %>
+<div class="list-grid">
+
+</div>
+
+
+<% @lists.each do |list| %>
+<%# CREATE A LIST CARD ELEMENT FOR EVERY EXISTING LIST
+ %>
+
+    <div class="list-card"
+      <% if list.photo.attached? %>
+        style='background-image: url("<%= cl_image_path list.photo.key %>");'
+      <% end %>
+
+    >
+
+      <%= link_to list_path(list), class: "list-card-link" do  %>
+        <%= list.name %>
+      <% end %>
+
+    </div>
+
+<%# END OF LIST CARD ELEMENT %>
+
 
 <% end %>
+
+  <% if @list.photo.attached? %>
+    style='background-image: url("<%= cl_image_path @list.photo.key %>");'
+  <% end %>

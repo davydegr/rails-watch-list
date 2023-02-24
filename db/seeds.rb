@@ -6,7 +6,12 @@
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
 
-puts "Destroying bookmarks. Destroying lists. Destroying movies."
+puts "Destroying all photos in Cloudinary..."
+List.all.each do |list|
+  list.photo.purge
+end
+
+puts "Destroying bookmarks... \n Destroying lists... \n Destroying movies..."
 Bookmark.destroy_all
 List.destroy_all
 Movie.destroy_all
@@ -18,26 +23,31 @@ movies = JSON.parse(movies_serialized)["results"]
 
 movies.each do |movie|
   new_movie = Movie.create(
-    title: movie["original_title"],
-    overview: movie["overview"],
+    title: movie['original_title'],
+    overview: movie['overview'],
     poster_url: "https://image.tmdb.org/t/p/w500#{movie[:poster_path]}",
-    rating: movie["vote_average"]
+    rating: movie['vote_average']
   )
 
   puts "New movie created: #{new_movie.title}"
 end
 
-puts "Initiating a new list"
-10.times do
+puts 'Initiating a new list'
+3.times do
   new_list = List.create(
     name: Faker::Nation.nationality
   )
 
-  puts "----------------------------------------"
+  random_image = URI.open('https://picsum.photos/1200/800')
+  new_list.photo.attach(io: random_image, filename: rand(1...5000).to_s, content_type: 'image/jpg')
+
+  new_list.save
+
+  puts '----------------------------------------'
   puts "List created: #{new_list.name}"
-  puts "----------------------------------------"
+  puts '----------------------------------------'
   puts "Initiating 5 to 10 bookmarks for #{new_list.name}"
-  puts "----------------------------------------"
+  puts '----------------------------------------'
   rand(5..10).times do
     new_bookmark = Bookmark.new(
       comment: Faker::Quotes::Shakespeare.hamlet_quote
@@ -48,8 +58,8 @@ puts "Initiating a new list"
     puts "Bookmark validation: #{new_bookmark.valid?}"
     new_bookmark.save
   end
-  puts "Attempted bookmark saves. Will not be added if unvalid. ✅"
+  puts 'Attempted bookmark saves. Will not be added if unvalid. ✅'
 
 end
 
-puts "Finished seeding."
+puts 'Finished seeding.'

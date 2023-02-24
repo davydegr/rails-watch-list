@@ -1,4 +1,11 @@
-<h1><%= @list.name %></h1>
+<h1
+  <% if @list.photo.attached? %>
+    style='background-image: url("<%= cl_image_path @list.photo.key %>");'
+  <% end %>
+  >
+    <%= @list.name %>
+  </h1>
+
 
 <%= simple_form_for [@list, @bookmark] do |f| %>
   <%= f.input :comment %>
@@ -23,7 +30,7 @@
   <% end %>
 </ul>
 
-<%= link_to lists_path do %>
+<%= link_to root_path do %>
   <i class="fa-solid fa-circle-chevron-left"></i> Back to home
 <% end %>
 
