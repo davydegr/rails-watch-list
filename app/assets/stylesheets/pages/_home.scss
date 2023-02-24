@@ -1,9 +1,34 @@
 // Specific CSS for your home-page
 .list-grid {
+  display: grid;
   grid-template-areas:
-                        "left"  "right-big"     "right-big"
-                        "left"  "right-small-1" "right-small-2"
+                        "left right-big right-big"
+                        "left right-small-1 right-small-2"
                         ;
 
+  grid-gap: 1em;
+  margin-bottom: 1em;
+}
+
+.list-grid-left {
+  grid-area: left;
+  height: 100%;
+}
+
+.list-grid-right-big {
+  grid-area: right-big;
+}
+
+.list-grid-right-small-1 {
+  grid-area: right-small-1;
+}
+
+.list-grid-right-small-2 {
+  grid-area: right-small-2;
+}
+
+.list-remaining-lists {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
   grid-gap: 1em;
 }

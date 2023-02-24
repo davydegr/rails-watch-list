@@ -1,43 +1,117 @@
 <div class="hero">
   <h1>All your lists</h1>
-</div>
 
-<h2>Add a list</h2>
-<%= simple_form_for(@list) do |f| %>
-  <%= f.input :name %>
-  <%= f.input :photo, as: :file %>
-  <%= f.submit %>
-<% end %>
+  <div class="list-grid">
+      <div class="list-grid-left">
 
-<h2>Your lists</h2>
+          <%# LIST CARD ---------------------------- %>
+          <%= link_to list_path(@lists[0]), class: "list-card-link" do %>
+              <div
+                class="list-card"
 
-<div class="list-grid">
+                <% if @lists[0].photo.attached? %>
+                  style='background-image: url("<%= cl_image_path @lists[0].photo.key %>");'
+                <% end %>>
 
-</div>
+                  <%= @lists[0].name %>
 
 
-<% @lists.each do |list| %>
-<%# CREATE A LIST CARD ELEMENT FOR EVERY EXISTING LIST
- %>
+              </div>
+          <% end %>
+          <%# LIST CARD END ---------------------------- %>
 
-    <div class="list-card"
-      <% if list.photo.attached? %>
-        style='background-image: url("<%= cl_image_path list.photo.key %>");'
-      <% end %>
+      </div>
 
-    >
+      <div class="list-grid-right-big">
 
-      <%= link_to list_path(list), class: "list-card-link" do  %>
-        <%= list.name %>
-      <% end %>
+          <%# LIST CARD ---------------------------- %>
+          <%= link_to list_path(@lists[1]), class: "list-card-link" do %>
+              <div
+                class="list-card"
+
+                <% if @lists[1].photo.attached? %>
+                  style='background-image: url("<%= cl_image_path @lists[1].photo.key %>");'
+                <% end %>>
+
+                  <%= @lists[1].name %>
+
+
+              </div>
+          <% end %>
+          <%# LIST CARD END ---------------------------- %>
+
+      </div>
+
+      <div class="list-grid-right-small-1">
+
+          <%# LIST CARD ---------------------------- %>
+          <%= link_to list_path(@lists[2]), class: "list-card-link" do %>
+              <div
+                class="list-card"
+
+                <% if @lists[2].photo.attached? %>
+                  style='background-image: url("<%= cl_image_path @lists[2].photo.key %>");'
+                <% end %>>
+
+                  <%= @lists[2].name %>
+
+
+              </div>
+          <% end %>
+          <%# LIST CARD END ---------------------------- %>
+
+      </div>
+
+      <div class="list-grid-right-small-2">
+
+          <%# LIST CARD ---------------------------- %>
+          <%= link_to list_path(@lists[3]), class: "list-card-link" do %>
+              <div
+                class="list-card"
+
+                <% if @lists[3].photo.attached? %>
+                  style='background-image: url("<%= cl_image_path @lists[3].photo.key %>");'
+                <% end %>>
+
+                  <%= @lists[3].name %>
+
+
+              </div>
+          <% end %>
+          <%# LIST CARD END ---------------------------- %>
 
     </div>
+  </div>
 
-<%# END OF LIST CARD ELEMENT %>
+  <div class="list-remaining-lists">
+      <% @lists[4..].each do |list| %>
 
+          <%# LIST CARD ELEMENT %>
 
-<% end %>
+            <%= link_to list_path(list), class: "list-card-link" do %>
+              <div class="list-card"
+                    <% if list.photo.attached? %>
+                      style='background-image: url("<%= cl_image_path list.photo.key %>");'
+                    <% end %>
+              >
 
-  <% if @list.photo.attached? %>
-    style='background-image: url("<%= cl_image_path @list.photo.key %>");'
+                <%= list.name %>
+
+              </div>
+            <% end %>
+
+          <%# END OF LIST CARD ELEMENT %>
+
+      <% end %>
+  </div>
+</div>
+
+<h2 class="mt-5">Create a new list:</h2>
+
+<div class="w-50">
+  <%= simple_form_for(@list) do |f| %>
+    <%= f.input :name %>
+    <%= f.input :photo, as: :file %>
+    <%= f.submit %>
   <% end %>
+</div>

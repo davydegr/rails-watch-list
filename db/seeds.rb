@@ -33,7 +33,7 @@ movies.each do |movie|
 end
 
 puts 'Initiating a new list'
-3.times do
+10.times do
   new_list = List.create(
     name: Faker::Nation.nationality
   )
